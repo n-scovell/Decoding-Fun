@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Decoding Can Be Fun</title>
+    </head>
+    <style>
+        body {
+            font-family: "Futura", sans-serif;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 750px;
+            margin: 20px auto;
+        }
+
+        p {
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 20px;
+            overflow-wrap: break-word;
+        }
+
+        section {
+            display: flex;
+            gap: 10px;
+        }
+        section div {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+        }
+        section div input, section div button {
+            box-sizing: border-box;
+            flex: 1;
+        }
+        section div button {
+            font-weight: 600;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+        section div input {
+            min-width: 80%;
+            padding: 10px 0px 10px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        h3 {
+            width: 600px;
+            outline: 1px solid #ccc;
+            padding:10px;
+            box-sizing:border-box;
+            margin: 20px 0px;
+            color: #333;
+            overflow-wrap: break-word;
+        }
+    </style>
+    <body>
+
+        <div class="container">
+            <p>
+            Simple decoding exercise. Doesn't really serve much of a purpose unless you want to place a code on your application for other devs to figure out.
+            </p>
+            <p>
+                EX: Bilbo Baggins = 66.105.108.98.111.32.66.97.103.103.105.110.115<br>
+                EX: Deeds will not be less valiant because they are unpraised. = 68.101.101.100.115.32.119.105.108.108.32.110.111.116.32.98.101.32.108.101.115.115.32.118.97.108.105.97.110.116.32.98.101.99.97.117.115.101.32.116.104.101.121.32.97.114.101.32.117.110.112.114.97.105.115.101.100.46
+            </p>
+            <h2>Give it a try</h2>
+            <section>
+                <div>
+                    <input type="text" id="codedText"></input>
+                    <button id="decode" onclick="run(true)">DECODE</button>
+                    <button id="translate" onClick="run(false)">TRANSLATE#</BUTTON>
+                </div>
+            </section>
+            <p>Your Code:</p>
+            <p id='shownCode'></p>
+        </div>
+
+    </body>
+</html>
+<script>
+    const safeReggie = /^[a-zA-Z0-9\s.,!?@#\-_()]{1,500}$/;
+    const safeInp = (s) => {
+        return safeReggie.test(s);
+    }
+    const run = (deterUse) => {
+        if (safeInp(document.getElementById('codedText').value)) {
+            let translater = ''
+            let pullFrom = !deterUse ? document.getElementById('codedText').value.split('.') : document.getElementById('codedText').value
+            for (let i = 0; i < pullFrom.length;i++) {
+            translater += (deterUse ? pullFrom[i].charCodeAt(0) : String.fromCharCode(pullFrom[i])) + (deterUse && i !== pullFrom.length - 1 ? '.' : '');
+            }
+            document.getElementById('shownCode').textContent = translater
+        } else {
+            document.getElementById('shownCode').textContent = "Hacking is bad"
+        }
+    }
+</script>
